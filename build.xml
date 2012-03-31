@@ -1,106 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="all" name="bananiser" xmlns:ivy="antlib:org.apache.ivy.ant">
-    <property name="jar.dir" value="target" />
-    <property name="jar.file" value="${jar.dir}/${ant.project.name}.jar" />
-    <property name="main.src.dir" value="src" />
-    <property name="main.bin.dir" value="${jar.dir}/bin" />
-    <property name="test.src.dir" value="test" />
-    <property name="test.bin.dir" value="${jar.dir}/test" />
-    <property name="deps.dir" value="deps" />
+	<property name="jar.dir" value="target" />
+	<property name="jar.file" value="${jar.dir}/${ant.project.name}.jar" />
+	<property name="main.src.dir" value="src" />
+	<property name="main.bin.dir" value="${jar.dir}/bin" />
+	<property name="test.src.dir" value="test" />
+	<property name="test.bin.dir" value="${jar.dir}/test" />
+	<property name="deps.dir" value="deps" />
 
-    <path id="compile.path">
-        <fileset dir="${deps.dir}">
-            <include name="**/*.jar" />
-        </fileset>
-    </path>
+	<path id="compile.path">
+		<fileset dir="${deps.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
 
-    <target name="init">
-        <delete file="${jar.name}" />
-        <delete dir="${jar.dir}" />
-        <mkdir dir="${jar.dir}" />
-        <mkdir dir="${main.bin.dir}" />
-        <mkdir dir="${test.bin.dir}" />
-    </target>
+	<target name="init">
+		<delete file="${jar.name}" />
+		<delete dir="${jar.dir}" />
+		<mkdir dir="${jar.dir}" />
+		<mkdir dir="${main.bin.dir}" />
+		<mkdir dir="${test.bin.dir}" />
+	</target>
 
-    <target name="resolve" depends="init">
-        <ivy:retrieve pattern="deps/[organisation]-[artifact]-[revision].[type]" />
-    </target>
+	<target name="resolve" depends="init">
+		<ivy:retrieve pattern="deps/[organisation]-[artifact]-[revision].[type]" />
+	</target>
 
-    <target name="compile" depends="resolve">
-        <javac classpathref="compile.path" debug="true" destdir="${main.bin.dir}" includeantruntime="false">
-            <src path="${main.src.dir}" />
-        </javac>
-    </target>
+	<target name="compile" depends="resolve">
+		<javac classpathref="compile.path" debug="true" destdir="${main.bin.dir}" includeantruntime="false">
+			<src path="${main.src.dir}" />
+		</javac>
+	</target>
 
-    <target name="test" depends="compile">
-        <javac debug="true" destdir="${test.bin.dir}" includeantruntime="false">
-            <classpath>
-                <path refid="compile.path" />
-                <dirset dir="${main.bin.dir}" />
-            </classpath>
-            <src path="${test.src.dir}" />
-        </javac>
+	<target name="test" depends="compile">
+		<javac debug="true" destdir="${test.bin.dir}" includeantruntime="false">
+			<classpath>
+				<path refid="compile.path" />
+				<dirset dir="${main.bin.dir}" />
+			</classpath>
+			<src path="${test.src.dir}" />
+		</javac>
 
-        <junit includeantruntime="false" printsummary="yes" haltonfailure="true">
-            <formatter type="plain" />
-            <classpath>
-                <path refid="compile.path" />
-                <dirset dir="${main.bin.dir}" />
-                <dirset dir="${test.bin.dir}" />
-            </classpath>
-            <batchtest todir="${jar.dir}">
-                <fileset dir="${test.bin.dir}">
-                    <include name="**/*Test.class" />
-                </fileset>
-            </batchtest>
-        </junit>
-    </target>
+		<junit includeantruntime="false" printsummary="yes" haltonfailure="true">
+			<formatter type="xml" />
+			<classpath>
+				<path refid="compile.path" />
+				<dirset dir="${main.bin.dir}" />
+				<dirset dir="${test.bin.dir}" />
+			</classpath>
+			<batchtest todir="${jar.dir}">
+				<fileset dir="${test.bin.dir}">
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
 
-    <target name="pack">
-        <jar destfile="${jar.file}">
-            <zipgroupfileset dir="${deps.dir}" includes="*.jar" />
-            <fileset dir="${main.bin.dir}">
-                <include name="**/*" />
-            </fileset>
-            <manifest>
-                <attribute name="Main-Class" value="com.soundcloud.bananiser.Bananise" />
-            </manifest>
-        </jar>
-    </target>
+	<target name="pack">
+		<jar destfile="${jar.file}">
+			<zipgroupfileset dir="${deps.dir}" includes="*.jar" />
+			<fileset dir="${main.bin.dir}">
+				<include name="**/*" />
+			</fileset>
+			<manifest>
+				<attribute name="Main-Class" value="com.soundcloud.bananiser.Bananise" />
+			</manifest>
+		</jar>
+	</target>
 
-    <target name="functional-test" depends="pack">
-        <echo message="================================ Test: Text->Text" />
-        <exec executable="lib/hadoop/bin/hadoop" failonerror="true">
-            <arg line="jar ${jar.file} Cat --input ${test.src.dir}/testdata.log  --output ${test.bin.dir}/test-output1 -fs file://." />
-        </exec>
+	<target name="functional-test" depends="pack">
+		<echo message="================================ Test: Text->Text" />
+		<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
+			<arg line="jar ${jar.file} Cat --input ${test.src.dir}/testdata.log  --output ${test.bin.dir}/test-output1 -fs file://." />
+		</exec>
 
-        <echo message="================================ Test: Text->Seq" />
-        <exec executable="lib/hadoop/bin/hadoop" failonerror="true">
-            <arg line="jar ${jar.file} Cat  --compressedOutput --input ${test.bin.dir}/test-output1/part-r-00000  --output ${test.bin.dir}/test-output2 -fs file://." />
-        </exec>
+		<echo message="================================ Test: Text->Seq" />
+		<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
+			<arg line="jar ${jar.file} Cat  --compressedOutput --input ${test.bin.dir}/test-output1/part-r-00000  --output ${test.bin.dir}/test-output2 -fs file://." />
+		</exec>
 
-        <echo message="================================ Test: Seq->Seq" />
-        <exec executable="lib/hadoop/bin/hadoop" failonerror="true">
-            <arg line="jar ${jar.file} Cat --compressedOutput  --compressedInput --input ${test.bin.dir}/test-output2/part-r-00000  --output ${test.bin.dir}/test-output3 -fs file://." />
-        </exec>
+		<echo message="================================ Test: Seq->Seq" />
+		<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
+			<arg line="jar ${jar.file} Cat --compressedOutput  --compressedInput --input ${test.bin.dir}/test-output2/part-r-00000  --output ${test.bin.dir}/test-output3 -fs file://." />
+		</exec>
 
-        <echo message="================================ Test: Seq->Text" />
-        <exec executable="lib/hadoop/bin/hadoop" failonerror="true">
-            <arg line="jar ${jar.file} Cat --compressedInput --input ${test.bin.dir}/test-output3/part-r-00000  --output ${test.bin.dir}/test-output4 -fs file://." />
-        </exec>
+		<echo message="================================ Test: Seq->Text" />
+		<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
+			<arg line="jar ${jar.file} Cat --compressedInput --input ${test.bin.dir}/test-output3/part-r-00000  --output ${test.bin.dir}/test-output4 -fs file://." />
+		</exec>
 
-        <echo message="================================ Test: Text==Text" />
-        <exec executable="diff" failonerror="true">
-            <arg line="${test.src.dir}/testdata.log" />
-            <arg line="${test.bin.dir}/test-output1/part-r-00000" />
-        </exec>
+		<echo message="================================ Test: Text==Text" />
+		<exec executable="diff" failonerror="true">
+			<arg line="${test.src.dir}/testdata.log" />
+			<arg line="${test.bin.dir}/test-output1/part-r-00000" />
+		</exec>
 
-        <echo message="================================ Test: Text==Text" />
-        <exec executable="diff" failonerror="true">
-            <arg line="${test.bin.dir}/test-output4/part-r-00000" />
-            <arg line="${test.src.dir}/testdata.log" />
-        </exec>
-    </target>
+		<echo message="================================ Test: Text==Text" />
+		<exec executable="diff" failonerror="true">
+			<arg line="${test.bin.dir}/test-output4/part-r-00000" />
+			<arg line="${test.src.dir}/testdata.log" />
+		</exec>
+	</target>
 
-    <target name="all" depends="compile, test,pack, functional-test" />
+	<target name="all" depends="compile, test,pack, functional-test" />
 </project>
