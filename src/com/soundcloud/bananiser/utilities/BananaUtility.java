@@ -24,6 +24,7 @@ public abstract class BananaUtility {
     private List<String> utility = null;
 
     @Parameter(names = "-fs", required = false)
+    @SuppressWarnings("unused")
     private String ignore = null;
 
     @Parameter(names = "--input", description = "input path patterns", required = true)

@@ -15,7 +15,8 @@ import org.junit.Test;
 
 public class SeqFileCompatibleMapperTest {
 
-    class StubMapper extends SeqFileCompatibleMapper {
+    @SuppressWarnings("rawtypes")
+	class StubMapper extends SeqFileCompatibleMapper {
 
         private LongWritable key;
         private Text value;

@@ -1,0 +1,5 @@
+language: java
+script: "ant"
+notifications:
+  email:
+    - pcalcado+travisci@gmail.com
