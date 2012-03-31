@@ -41,8 +41,8 @@
 			<src path="${test.src.dir}" />
 		</javac>
 
-		<junit includeantruntime="false" printsummary="yes" haltonfailure="true">
-			<formatter type="xml" />
+		<junit includeantruntime="false" showoutput="true" printsummary="yes" haltonfailure="true">
+			<formatter type="plain" />
 			<classpath>
 				<path refid="compile.path" />
 				<dirset dir="${main.bin.dir}" />
