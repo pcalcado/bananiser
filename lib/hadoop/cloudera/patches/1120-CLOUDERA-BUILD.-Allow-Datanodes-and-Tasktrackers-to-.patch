@@ -1,0 +1,132 @@
+From 318bc781117fa276ae81a3d111f5eeba0020634f Mon Sep 17 00:00:00 2001
+From: Eli Collins <eli@cloudera.com>
+Date: Tue, 20 Mar 2012 10:44:19 -0700
+Subject: [PATCH 1120/1120] CLOUDERA-BUILD. Allow Datanodes and Tasktrackers to connect to Namenodes and Jobtrackers with
+ different build revisions.
+
+Reason: Allow DN/TT upgrade and host addition with refreshed builds
+Author: Eli Collins
+Ref: CDH-4560
+---
+ src/core/core-default.xml                          |   15 +++++++++++
+ .../hadoop/hdfs/server/datanode/DataNode.java      |   25 +++++++++++++++++-
+ .../org/apache/hadoop/mapred/TaskTracker.java      |   26 ++++++++++++++++++-
+ 3 files changed, 62 insertions(+), 4 deletions(-)
+
+diff --git a/src/core/core-default.xml b/src/core/core-default.xml
+index 02c7d42..7f4ac70 100644
+--- a/src/core/core-default.xml
++++ b/src/core/core-default.xml
+@@ -569,4 +569,19 @@
+   </description>
+ </property>
+ 
++<property>
++  <name>hadoop.permitted.revisions</name>
++  <value>
++03b655719d13929bd68bb2c2f9cee615b389cea9,
++217a3767c48ad11d4632e19a22897677268c40c4
++  </value>
++  <description>A comma separate list of Hadoop build revisions to
++    permit when the Datanode or Tasktracker handshakes with the
++    Namenode or Jobtracker, respectively. Setting this allows it to
++    connect with a Namenode or Jobtracker running with a different
++    build revision. The default values are the original CDH3u3 release
++    and the first CDH3u3 refresh.
++  </description>
++</property>
++
+ </configuration>
+diff --git a/src/hdfs/org/apache/hadoop/hdfs/server/datanode/DataNode.java b/src/hdfs/org/apache/hadoop/hdfs/server/datanode/DataNode.java
+index a1b7cba..3396183 100644
+--- a/src/hdfs/org/apache/hadoop/hdfs/server/datanode/DataNode.java
++++ b/src/hdfs/org/apache/hadoop/hdfs/server/datanode/DataNode.java
+@@ -563,6 +563,26 @@ public class DataNode extends Configured
+            SocketChannel.open().socket() : new Socket();                                   
+   }
+   
++  /**
++   * @return true if the given remote build revision matches the
++   *    local revision or a configured set of permissible revisions
++   */
++  private boolean isPermittedRevision(String remoteRevision,
++      String localRevision) {
++    if (remoteRevision.equals(localRevision)) {
++      return true;
++    }
++    String[] permittedRevisions =
++      getConf().getTrimmedStrings("hadoop.permitted.revisions");
++    for (String rev : permittedRevisions) {
++      if (remoteRevision.equals(rev)) {
++        LOG.info("Permitting Namenode build revision " + rev);
++        return true;
++      }
++    }
++    return false;
++  }
++
+   private NamespaceInfo handshake() throws IOException {
+     NamespaceInfo nsInfo = new NamespaceInfo();
+     while (shouldRun) {
+@@ -577,8 +597,9 @@ public class DataNode extends Configured
+       }
+     }
+     String errorMsg = null;
+-    // verify build version
+-    if( ! nsInfo.getBuildVersion().equals( Storage.getBuildVersion() )) {
++    // verify build revision
++    if (!isPermittedRevision(
++          nsInfo.getBuildVersion(), Storage.getBuildVersion())) {
+       errorMsg = "Incompatible build versions: namenode BV = " 
+         + nsInfo.getBuildVersion() + "; datanode BV = "
+         + Storage.getBuildVersion();
+diff --git a/src/mapred/org/apache/hadoop/mapred/TaskTracker.java b/src/mapred/org/apache/hadoop/mapred/TaskTracker.java
+index a5ba0f5..63b84b1 100644
+--- a/src/mapred/org/apache/hadoop/mapred/TaskTracker.java
++++ b/src/mapred/org/apache/hadoop/mapred/TaskTracker.java
+@@ -1699,6 +1699,26 @@ public class TaskTracker implements MRConstants, TaskUmbilicalProtocol,
+   }
+ 
+   /**
++   * @return true if the given remote build revision matches the
++   *    local revision or a configured set of permissible revisions
++   */
++  private boolean isPermittedRevision(String remoteRevision,
++      String localRevision) {
++    if (remoteRevision.equals(localRevision)) {
++      return true;
++    }
++    String[] permittedRevisions =
++      fConf.getTrimmedStrings("hadoop.permitted.revisions");
++    for (String rev : permittedRevisions) {
++      if (remoteRevision.equals(rev)) {
++        LOG.info("Permitting Jobtracker build revision " + rev);
++        return true;
++      }
++    }
++    return false;
++  }
++
++  /**
+    * Main service loop.  Will stay in this loop forever.
+    */
+   State offerService() throws Exception {
+@@ -1721,11 +1741,13 @@ public class TaskTracker implements MRConstants, TaskUmbilicalProtocol,
+         }
+ 
+         // If the TaskTracker is just starting up:
+-        // 1. Verify the buildVersion
++        // 1. Verify the build revision
+         // 2. Get the system directory & filesystem
+         if(justInited) {
+           String jobTrackerBV = jobClient.getBuildVersion();
+-          if(!VersionInfo.getBuildVersion().equals(jobTrackerBV)) {
++          String jobTrackerRev = jobTrackerBV.split(" ")[2];
++          String taskTrackerRev = VersionInfo.getBuildVersion().split(" ")[2];
++          if (!isPermittedRevision(jobTrackerRev, taskTrackerRev)) {
+             String msg = "Shutting down. Incompatible buildVersion." +
+             "\nJobTracker's: " + jobTrackerBV + 
+             "\nTaskTracker's: "+ VersionInfo.getBuildVersion();
+-- 
+1.7.0.4
+
