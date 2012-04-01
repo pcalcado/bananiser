@@ -9,6 +9,8 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
@@ -17,6 +19,8 @@ import org.apache.hadoop.util.ToolRunner;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.soundcloud.bananiser.NoOpMapper;
+import com.soundcloud.bananiser.NoOpReducer;
 
 public abstract class BananaUtility {
 
@@ -112,13 +116,26 @@ public abstract class BananaUtility {
         }
     }
 
-    protected boolean isCompressedInput() {
+    private void addMapperAndReducerTo(Job job) {
+        job.setMapperClass(getMapperToUse());
+        job.setReducerClass(getReducerToUse());
+    }
+
+    protected final boolean isCompressedInput() {
         return compressedInput;
     }
 
-    protected boolean isCompressedOutput() {
+    protected final boolean isCompressedOutput() {
         return compressedOutput;
     }
 
-    protected abstract void addMapperAndReducerTo(Job job);
+    @SuppressWarnings("rawtypes")
+    protected Class<? extends Reducer> getReducerToUse() {
+        return isCompressedOutput() ? Reducer.class : NoOpReducer.class;
+    }
+
+    @SuppressWarnings("rawtypes")
+    protected Class<? extends Mapper> getMapperToUse() {
+        return NoOpMapper.class;
+    }
 }

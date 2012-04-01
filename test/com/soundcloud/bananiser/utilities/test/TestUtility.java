@@ -1,6 +1,7 @@
 package com.soundcloud.bananiser.utilities.test;
 
-import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
 
 import com.soundcloud.bananiser.utilities.BananaUtility;
 
@@ -10,9 +11,15 @@ public class TestUtility extends BananaUtility {
         super(args);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public void addMapperAndReducerTo(Job job) {
-        job.setMapperClass(TestMapper.class);
-        job.setReducerClass(TestReducer.class);
+    protected Class<? extends Mapper> getMapperToUse() {
+        return TestMapper.class;
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    protected Class<? extends Reducer> getReducerToUse() {
+        return TestReducer.class;
     }
 }

@@ -8,6 +8,7 @@ import static org.hamcrest.text.StringContains.containsString;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
@@ -16,6 +17,8 @@ import org.junit.Test;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.soundcloud.bananiser.NoOpMapper;
+import com.soundcloud.bananiser.NoOpReducer;
 
 public class BananaUtilityTest {
 
@@ -33,9 +36,6 @@ public class BananaUtilityTest {
             super(args);
         }
 
-        @Override
-        protected void addMapperAndReducerTo(Job job) {
-        }
     }
 
     @Test(expected = ParameterException.class)
@@ -94,6 +94,8 @@ public class BananaUtilityTest {
                 sameClassAs(TextInputFormat.class));
         assertThat(job.getOutputFormatClass(),
                 sameClassAs(TextOutputFormat.class));
+        assertThat(job.getMapperClass(), sameClassAs(NoOpMapper.class));
+        assertThat(job.getReducerClass(), sameClassAs(NoOpReducer.class));
     }
 
     @SuppressWarnings("unchecked")
@@ -110,6 +112,8 @@ public class BananaUtilityTest {
                 sameClassAs(SequenceFileInputFormat.class));
         assertThat(job.getOutputFormatClass(),
                 sameClassAs(TextOutputFormat.class));
+        assertThat(job.getMapperClass(), sameClassAs(NoOpMapper.class));
+        assertThat(job.getReducerClass(), sameClassAs(NoOpReducer.class));
     }
 
     @SuppressWarnings("unchecked")
@@ -127,5 +131,7 @@ public class BananaUtilityTest {
                 sameClassAs(TextInputFormat.class));
         assertThat(job.getOutputFormatClass(),
                 sameClassAs(SequenceFileOutputFormat.class));
+        assertThat(job.getMapperClass(), sameClassAs(NoOpMapper.class));
+        assertThat(job.getReducerClass(), sameClassAs(Reducer.class));
     }
 }
