@@ -1,13 +1,18 @@
 <ivy-module version="2.0">
 	<info organisation="org.apache" module="bananiser" />
 	<dependencies>
-		<dependency org="com.cloudera.hadoop" name="hadoop-core" rev="0.20.2-737" />
+		<dependency org="com.cloudera.hadoop" name="hadoop-core"
+			rev="0.20.2-737" />
 		<dependency org="commons-cli" name="commons-cli" rev="1.2" />
 		<dependency org="com.beust" name="jcommander" rev="1.20" />
 		<dependency org="org.apache.commons" name="commons-io" rev="1.3.2" />
 		<dependency org="junit" name="junit" rev="4.10" />
 		<dependency org="org.mockito" name="mockito-all" rev="1.9.0" />
 		<dependency org="org.hamcrest" name="hamcrest-all" rev="1.1" />
-		<dependency org="commons-httpclient" name="commons-httpclient" rev="3.0.1" />
+		<dependency org="commons-httpclient" name="commons-httpclient"
+			rev="3.0.1" />
+		<dependency org="commons-logging" name="commons-logging"
+			rev="1.0.4">
+		</dependency>
 	</dependencies>
 </ivy-module>
