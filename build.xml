@@ -69,38 +69,41 @@
 	</target>
 
 	<target name="functional-test" depends="pack">
-		<echo message="================================ Test: Text->Text" />
-		<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
-			<arg line="jar ${jar.file} Cat --input ${test.src.dir}/testdata.log  --output ${test.bin.dir}/test-output1 -fs file://." />
-		</exec>
+		<run-bananised-tool utility="Cat" description="Text->Text" input-file="${test.src.dir}/testdata.log" output-file="${test.bin.dir}/test-output1" />
+		<run-bananised-tool utility="Cat" description="Text->Seq" input-file="${test.bin.dir}/test-output1/part-r-00000" output-file="${test.bin.dir}/test-output2" compressed="--compressedOutput" />
+		<run-bananised-tool utility="Cat" description="Seq->Seq" input-file="${test.bin.dir}/test-output2/part-r-00000" output-file="${test.bin.dir}/test-output3" compressed="--compressedOutput  --compressedInput" />
+		<run-bananised-tool utility="Cat" description="Seq->Text" input-file="${test.bin.dir}/test-output3/part-r-00000" output-file="${test.bin.dir}/test-output4" compressed="--compressedInput" />
 
-		<echo message="================================ Test: Text->Seq" />
-		<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
-			<arg line="jar ${jar.file} Cat  --compressedOutput --input ${test.bin.dir}/test-output1/part-r-00000  --output ${test.bin.dir}/test-output2 -fs file://." />
-		</exec>
-
-		<echo message="================================ Test: Seq->Seq" />
-		<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
-			<arg line="jar ${jar.file} Cat --compressedOutput  --compressedInput --input ${test.bin.dir}/test-output2/part-r-00000  --output ${test.bin.dir}/test-output3 -fs file://." />
-		</exec>
-
-		<echo message="================================ Test: Seq->Text" />
-		<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
-			<arg line="jar ${jar.file} Cat --compressedInput --input ${test.bin.dir}/test-output3/part-r-00000  --output ${test.bin.dir}/test-output4 -fs file://." />
-		</exec>
-
-		<echo message="================================ Test: Text==Text" />
-		<exec executable="diff" failonerror="true">
-			<arg line="${test.src.dir}/testdata.log" />
-			<arg line="${test.bin.dir}/test-output1/part-r-00000" />
-		</exec>
-
-		<echo message="================================ Test: Text==Text" />
-		<exec executable="diff" failonerror="true">
-			<arg line="${test.bin.dir}/test-output4/part-r-00000" />
-			<arg line="${test.src.dir}/testdata.log" />
-		</exec>
+		<diff description="Text==Text" one="${test.src.dir}/testdata.log" another="${test.bin.dir}/test-output1/part-r-00000" />
+		<diff description="Text==Text" one="${test.src.dir}/testdata.log" another="${test.bin.dir}/test-output4/part-r-00000" />
 	</target>
+
+	<macrodef name="run-bananised-tool">
+		<attribute name="utility" />
+		<attribute name="description" />
+		<attribute name="compressed" default="" />
+		<attribute name="input-file" />
+		<attribute name="output-file" />
+		<sequential>
+			<echo message="================================ Test: @{utility} @{description}" />
+			<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
+				<arg line="jar ${jar.file} @{utility} @{compressed} --input @{input-file}  --output @{output-file} -fs file://." />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="diff">
+		<attribute name="description" />
+		<attribute name="one" />
+		<attribute name="another" />
+		<sequential>
+			<echo message="================================ Test: @{description}" />
+			<exec executable="diff" failonerror="true">
+				<arg line="@{one}" />
+				<arg line="@{another}" />
+			</exec>
+		</sequential>
+	</macrodef>
 
 	<target name="all" depends="compile, test,pack, functional-test" />
 </project>
