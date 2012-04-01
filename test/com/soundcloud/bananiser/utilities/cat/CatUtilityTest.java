@@ -7,21 +7,21 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.Job;
 import org.junit.Test;
 
+import com.soundcloud.bananiser.NoOpMapper;
 import com.soundcloud.bananiser.NoOpReducer;
 
 public class CatUtilityTest {
 
     @SuppressWarnings({ "unchecked" })
     @Test
-    public void shouldUseCatMapperAndIdentityReducer()
-            throws ClassNotFoundException {
+    public void shouldUseNoOpMapperAndReducer() throws ClassNotFoundException {
         String[] args = new String[] { "Cat", "--input", "some/in/a",
                 "--output", "some/out/c" };
         Configuration config = new Configuration();
 
         CatUtility catUtility = new CatUtility(args);
         Job job = catUtility.createJob(config);
-        assertThat(job.getMapperClass(), sameClassAs(CatMapper.class));
+        assertThat(job.getMapperClass(), sameClassAs(NoOpMapper.class));
         assertThat(job.getReducerClass(), sameClassAs(NoOpReducer.class));
     }
 }

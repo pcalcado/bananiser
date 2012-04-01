@@ -3,6 +3,7 @@ package com.soundcloud.bananiser.utilities.cat;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Reducer;
 
+import com.soundcloud.bananiser.NoOpMapper;
 import com.soundcloud.bananiser.NoOpReducer;
 import com.soundcloud.bananiser.utilities.BananaUtility;
 
@@ -13,7 +14,7 @@ public class CatUtility extends BananaUtility {
 
     @Override
     protected void addMapperAndReducerTo(Job job) {
-        job.setMapperClass(CatMapper.class);
+        job.setMapperClass(NoOpMapper.class);
         if (isCompressedOutput()) {
             job.setReducerClass(Reducer.class);
         } else {

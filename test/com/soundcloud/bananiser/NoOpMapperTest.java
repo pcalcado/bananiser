@@ -1,4 +1,4 @@
-package com.soundcloud.bananiser.utilities.cat;
+package com.soundcloud.bananiser;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
@@ -12,7 +12,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.junit.Test;
 
-public class CatMapperTest {
+public class NoOpMapperTest {
     @Test
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void shouldNotChangeContentsOfTextFile() throws IOException,
@@ -22,7 +22,7 @@ public class CatMapperTest {
                 "If you kiss me, kiss me with your silver eyes");
         Context context = mock(Context.class);
 
-        CatMapper cat = new CatMapper();
+        NoOpMapper cat = new NoOpMapper();
         cat.map(key, originalText, context);
         verify(context, only()).write(key, originalText);
     }
@@ -38,7 +38,7 @@ public class CatMapperTest {
                 originalText.getBytes());
         Context context = mock(Context.class);
 
-        CatMapper cat = new CatMapper();
+        NoOpMapper cat = new NoOpMapper();
         cat.map(key, compressedText, context);
         verify(context, only()).write(key, originalText);
     }
