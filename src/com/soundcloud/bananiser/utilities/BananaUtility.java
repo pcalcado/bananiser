@@ -54,6 +54,7 @@ public abstract class BananaUtility {
         addMapperAndReducerTo(job);
         addInputAndOutputFormats(job);
 
+        configure(job);
         return job;
     }
 
@@ -138,4 +139,8 @@ public abstract class BananaUtility {
     protected Class<? extends Mapper> getMapperToUse() {
         return NoOpMapper.class;
     }
+
+    protected void configure(Job job) {
+    }
+
 }
