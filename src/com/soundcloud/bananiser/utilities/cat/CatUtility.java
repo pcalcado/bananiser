@@ -1,10 +1,10 @@
-package com.soundcloud.bananiser.utilities;
+package com.soundcloud.bananiser.utilities.cat;
 
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import com.soundcloud.bananiser.NoOpReducer;
-import com.soundcloud.bananiser.utilities.cat.CatMapper;
+import com.soundcloud.bananiser.utilities.BananaUtility;
 
 public class CatUtility extends BananaUtility {
     public CatUtility(String[] args) {

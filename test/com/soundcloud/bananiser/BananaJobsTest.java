@@ -7,7 +7,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.Job;
 import org.junit.Test;
 
-import com.soundcloud.bananiser.utilities.TestUtility;
+import com.soundcloud.bananiser.utilities.test.TestMapper;
+import com.soundcloud.bananiser.utilities.test.TestReducer;
 
 public class BananaJobsTest {
     @Test
@@ -21,9 +22,9 @@ public class BananaJobsTest {
         BananaJobs jobs = new BananaJobs(config);
         Job job = jobs.from(args);
         assertThat((Object) job.getMapperClass(),
-                equalTo((Object) TestUtility.TestMapper.class));
+                equalTo((Object) TestMapper.class));
         assertThat((Object) job.getReducerClass(),
-                equalTo((Object) TestUtility.TestReducer.class));
+                equalTo((Object) TestReducer.class));
     }
 
     @Test(expected = IllegalArgumentException.class)

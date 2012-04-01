@@ -16,18 +16,22 @@ public class BananaJobs {
     }
 
     public Job from(String[] args) {
-        String className = args[0].substring(0, 1).toUpperCase()
-                + args[0].substring(1);
-        String utilitiesPackageName = this.getClass().getPackage().getName()
-                + "." + "utilities";
-        String utilityFqn = utilitiesPackageName + "." + className + "Utility";
-        BananaUtility tool = instantiateTool(utilityFqn, args);
+        BananaUtility tool = instantiateTool(utiilityClassFqn(args), args);
         return tool.createJob(config);
+    }
+
+    private String utiilityClassFqn(String[] args) {
+        String utilityName = args[0];
+        String utilitiesPackageName = this.getClass().getPackage().getName()
+                + "." + "utilities" + "." + utilityName.toLowerCase();
+        String className = utilityName.substring(0, 1).toUpperCase()
+                + utilityName.substring(1);
+        String utilityFqn = utilitiesPackageName + "." + className + "Utility";
+        return utilityFqn;
     }
 
     @SuppressWarnings("unchecked")
     private BananaUtility instantiateTool(String toolFqn, String[] args) {
-
         try {
             Class<? extends BananaUtility> toolClass = (Class<? extends BananaUtility>) Class
                     .forName(toolFqn);

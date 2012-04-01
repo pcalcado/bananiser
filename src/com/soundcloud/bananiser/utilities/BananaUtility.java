@@ -16,10 +16,10 @@ import org.apache.hadoop.util.ToolRunner;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
 
 public abstract class BananaUtility {
 
-    @SuppressWarnings("unused")
     @Parameter(required = true)
     private List<String> utility = null;
 
@@ -45,11 +45,18 @@ public abstract class BananaUtility {
 
     public Job createJob(Configuration configToUseAsPrototype) {
         Job job = instantiateJob(configToUseAsPrototype);
+        addJobName(job);
         addInputAndOutputPathsTo(job);
         addMapperAndReducerTo(job);
         addInputAndOutputFormats(job);
 
         return job;
+    }
+
+    private void addJobName(Job job) {
+        String name = "Bananiser: Running [" + utility.get(0) + "] for ["
+                + System.getenv().get("USER") + "]";
+        job.setJobName(name);
     }
 
     private void addInputAndOutputFormats(Job job) {
@@ -66,13 +73,14 @@ public abstract class BananaUtility {
         JCommander cli = new JCommander(this);
         try {
             cli.parse(args);
-        } catch (Exception e) {
+        } catch (ParameterException e) {
             for (String arg : args) {
                 System.out.println("arg:" + arg);
             }
             e.printStackTrace();
             cli.usage();
             ToolRunner.printGenericCommandUsage(System.out);
+            throw e;
         }
     }
 
