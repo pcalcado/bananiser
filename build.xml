@@ -41,7 +41,7 @@
 			<src path="${test.src.dir}" />
 		</javac>
 
-		<junit includeantruntime="false" showoutput="true" printsummary="yes" haltonfailure="true" fork="true" forkmode="once">
+		<junit includeantruntime="false" showoutput="true" printsummary="yes" haltonfailure="true">
 			<formatter type="plain" />
 			<classpath>
 				<path refid="compile.path" />
