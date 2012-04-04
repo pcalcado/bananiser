@@ -14,15 +14,18 @@ public class SedishMapper extends SeqFileCompatibleMapper<Text> {
             .getName() + ".replaceWith";
     public static final String TO_REPLACE_PARAMETER = SedishMapper.class
             .getName() + ".toReplace";
-    private String pattern;
+    public static final String REGEXP_SEPARATOR = "::,::";
+
     private String replaceWith;
+    private String[] patterns;
 
     @Override
     protected void setup(Context context) throws IOException,
             InterruptedException {
         super.setup(context);
         Configuration configuration = context.getConfiguration();
-        this.pattern = configuration.get(TO_REPLACE_PARAMETER);
+        this.patterns = configuration.get(TO_REPLACE_PARAMETER).split(
+                REGEXP_SEPARATOR);
         this.replaceWith = configuration.get(REPLACE_WITH_PARAMETER);
     }
 
@@ -31,14 +34,17 @@ public class SedishMapper extends SeqFileCompatibleMapper<Text> {
             throws IOException, InterruptedException {
         checkIfConfiguredCorrectly();
         String original = value.toString();
-        String replaced = original.replaceAll(pattern, replaceWith);
-        Text modified = new Text(replaced);
-        context.write(key, modified);
+
+        String modified = original;
+        for (String pattern : patterns) {
+            modified = modified.replaceAll(pattern, replaceWith);
+        }
+        context.write(key, new Text(modified));
     }
 
     private void checkIfConfiguredCorrectly() {
-        if (pattern == null || replaceWith == null)
-            throw new IllegalStateException("Pattern [" + pattern
+        if (patterns == null || patterns.length == 0 || replaceWith == null)
+            throw new IllegalStateException("Patterns [" + patterns
                     + "] and replace string [" + replaceWith + "]");
     }
 }
