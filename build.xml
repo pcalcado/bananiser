@@ -27,7 +27,10 @@
 	</target>
 
 	<target name="compile" depends="init">
-		<javac classpathref="compile.path" debug="true" destdir="${main.bin.dir}" includeantruntime="false">
+		<javac classpathref="compile.path"
+		       debug="true"
+		       destdir="${main.bin.dir}"
+		       includeantruntime="false">
 			<src path="${main.src.dir}" />
 		</javac>
 	</target>
@@ -41,7 +44,11 @@
 			<src path="${test.src.dir}" />
 		</javac>
 
-		<junit showoutput="true" printsummary="yes" haltonfailure="true" fork="true" forkmode="once">
+		<junit showoutput="true"
+		       printsummary="yes"
+		       haltonfailure="true"
+		       fork="true"
+		       forkmode="once">
 			<formatter type="plain" />
 			<classpath>
 				<path refid="compile.path" />
@@ -63,33 +70,71 @@
 				<include name="**/*" />
 			</fileset>
 			<manifest>
-				<attribute name="Main-Class" value="com.soundcloud.bananiser.Bananise" />
+				<attribute name="Main-Class"
+				           value="com.soundcloud.bananiser.Bananise" />
 			</manifest>
 		</jar>
 	</target>
 
-	<target name="functional-test" depends="pack, functional-test-sedish, functional-test-cat" />
+	<target name="functional-test"
+	        depends="pack, functional-test-sedish, functional-test-cat" />
 
 	<target name="functional-test-cat">
-		<run-bananised-tool utility="Cat" description="Text->Text" input-file="${test.src.dir}/testdata.log" output-file="${test.bin.dir}/test-cat-output1" />
+		<run-bananised-tool utility="Cat"
+		                    description="Text->Text"
+		                    input-file="${test.src.dir}/testdata.log"
+		                    output-file="${test.bin.dir}/test-cat-output1" />
 
-		<run-bananised-tool utility="Cat" description="Text->Seq" input-file="${test.bin.dir}/test-cat-output1/part-r-00000" output-file="${test.bin.dir}/test-cat-output2" compressed="--compressedOutput" />
+		<run-bananised-tool utility="Cat"
+		                    description="Text->Seq"
+		                    input-file="${test.bin.dir}/test-cat-output1/part-r-00000"
+		                    output-file="${test.bin.dir}/test-cat-output2"
+		                    compressed="--compressedOutput" />
 
-		<run-bananised-tool utility="Cat" description="Seq->Seq" input-file="${test.bin.dir}/test-cat-output2/part-r-00000" output-file="${test.bin.dir}/test-cat-output3" compressed="--compressedOutput  --compressedInput" />
+		<run-bananised-tool utility="Cat"
+		                    description="Seq->Seq"
+		                    input-file="${test.bin.dir}/test-cat-output2/part-r-00000"
+		                    output-file="${test.bin.dir}/test-cat-output3"
+		                    compressed="--compressedOutput  --compressedInput" />
 
-		<run-bananised-tool utility="Cat" description="Seq->Text" input-file="${test.bin.dir}/test-cat-output3/part-r-00000" output-file="${test.bin.dir}/test-cat-output4" compressed="--compressedInput" />
+		<run-bananised-tool utility="Cat"
+		                    description="Seq->Text"
+		                    input-file="${test.bin.dir}/test-cat-output3/part-r-00000"
+		                    output-file="${test.bin.dir}/test-cat-output4"
+		                    compressed="--compressedInput" />
 
-		<diff description="Text==Text" one="${test.src.dir}/testdata.log" another="${test.bin.dir}/test-cat-output1/part-r-00000" />
-		<diff description="Text==Text" one="${test.src.dir}/testdata.log" another="${test.bin.dir}/test-cat-output4/part-r-00000" />
+		<diff description="Text==Text"
+		      one="${test.src.dir}/testdata.log"
+		      another="${test.bin.dir}/test-cat-output1/part-r-00000" />
+		<diff description="Text==Text"
+		      one="${test.src.dir}/testdata.log"
+		      another="${test.bin.dir}/test-cat-output4/part-r-00000" />
 	</target>
 
 	<target name="functional-test-sedish">
-		<run-bananised-tool utility="Sedish" description="Sedish Text->Text" input-file="${test.src.dir}/testdata.log" output-file="${test.bin.dir}/test-sedish-output1" other="--replace biglogo --with notsoBIGlogo" />
-		<diff description="Text==Text" one="${test.src.dir}/testdata.sedish.log" another="${test.bin.dir}/test-sedish-output1/part-r-00000" />
+		<run-bananised-tool utility="Sedish"
+		                    description="Sedish Text->Text"
+		                    input-file="${test.src.dir}/testdata.log"
+		                    output-file="${test.bin.dir}/test-sedish-output1"
+		                    other="--replace biglogo --with notsoBIGlogo" />
+		<diff description="Text==Text"
+		      one="${test.src.dir}/testdata.sedish.log"
+		      another="${test.bin.dir}/test-sedish-output1/part-r-00000" />
 
-		<run-bananised-tool utility="Cat" description="Text->Seq" input-file="${test.src.dir}/testdata.log" output-file="${test.bin.dir}/test-sedish-output2" compressed="--compressedOutput" />
-		<run-bananised-tool utility="Sedish" description="Sedish Seq->Text" input-file="${test.bin.dir}/test-sedish-output2/part-r-00000" output-file="${test.bin.dir}/test-sedish-output3" compressed="--compressedInput" other="--replace biglogo --with notsoBIGlogo" />
-		<diff description="Text==Text" one="${test.src.dir}/testdata.sedish.log" another="${test.bin.dir}/test-sedish-output3/part-r-00000" />
+		<run-bananised-tool utility="Cat"
+		                    description="Text->Seq"
+		                    input-file="${test.src.dir}/testdata.log"
+		                    output-file="${test.bin.dir}/test-sedish-output2"
+		                    compressed="--compressedOutput" />
+		<run-bananised-tool utility="Sedish"
+		                    description="Sedish Seq->Text"
+		                    input-file="${test.bin.dir}/test-sedish-output2/part-r-00000"
+		                    output-file="${test.bin.dir}/test-sedish-output3"
+		                    compressed="--compressedInput"
+		                    other="--replace biglogo --with notsoBIGlogo" />
+		<diff description="Text==Text"
+		      one="${test.src.dir}/testdata.sedish.log"
+		      another="${test.bin.dir}/test-sedish-output3/part-r-00000" />
 	</target>
 
 	<macrodef name="run-bananised-tool">
