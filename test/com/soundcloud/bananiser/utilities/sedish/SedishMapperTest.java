@@ -38,7 +38,7 @@ public class SedishMapperTest {
         configuration.set(REPLACE_WITH_PARAMETER, "BANANA");
         SedishMapper mapper = new SedishMapper();
         mapper.setup(context);
-        mapper.map(ignored, new Text(sentence), context);
+        mapper.mapText(ignored, new Text(sentence), context);
 
         verify(context, times(1)).write(eq(ignored),
                 argThat(sameAs(new Text(modifiedSentence))));

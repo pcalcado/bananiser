@@ -27,7 +27,7 @@ public class SedishMapper extends SeqFileCompatibleMapper<Text> {
     }
 
     @Override
-    public void map(LongWritable key, Text value, Context context)
+    public void mapText(LongWritable key, Text value, Context context)
             throws IOException, InterruptedException {
         checkIfConfiguredCorrectly();
         String original = value.toString();

@@ -15,15 +15,14 @@ import org.junit.Test;
 
 public class SeqFileCompatibleMapperTest {
 
-    @SuppressWarnings("rawtypes")
-	class StubMapper extends SeqFileCompatibleMapper {
+    class StubMapper<T> extends SeqFileCompatibleMapper<T> {
 
         private LongWritable key;
         private Text value;
         private Context context;
 
         @Override
-        public void map(LongWritable key, Text value, Context context) {
+        public void mapText(LongWritable key, Text value, Context context) {
             this.key = key;
             this.value = value;
             this.context = context;
@@ -44,7 +43,6 @@ public class SeqFileCompatibleMapperTest {
     }
 
     @Test
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void shouldConvertFromBinaryFormatsToText() throws IOException,
             InterruptedException {
         String text = "Someone send a runner through the weather that I'm under for the feeling that I lost today";
@@ -52,8 +50,23 @@ public class SeqFileCompatibleMapperTest {
         LongWritable key = new LongWritable(666);
         BytesWritable value = new BytesWritable(text.getBytes());
 
-        StubMapper mapper = new StubMapper();
+        StubMapper<BytesWritable> mapper = new StubMapper<BytesWritable>();
         mapper.map(key, value, context);
+
+        assertThat(mapper.getKey(), is(key));
+        assertThat(mapper.getValue().toString(), equalTo(text));
+        assertThat(mapper.getContext(), is(context));
+    }
+
+    @Test
+    public void shouldMapText() throws IOException, InterruptedException {
+        String text = "You must be somewhere in London/You must be loving your life in the rain";
+        Context context = mock(Context.class);
+        LongWritable key = new LongWritable(667);
+        Text value = new Text(text);
+
+        StubMapper<Text> mapper = new StubMapper<Text>();
+        mapper.mapText(key, value, context);
 
         assertThat(mapper.getKey(), is(key));
         assertThat(mapper.getValue().toString(), equalTo(text));

@@ -23,12 +23,12 @@ public class NoOpMapperTest {
         Context context = mock(Context.class);
 
         NoOpMapper cat = new NoOpMapper();
-        cat.map(key, originalText, context);
+        cat.mapText(key, originalText, context);
         verify(context, only()).write(key, originalText);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void shouldNotChangeContentsOfCompressedFile() throws IOException,
             InterruptedException {
         LongWritable key = new LongWritable(666);
@@ -38,7 +38,7 @@ public class NoOpMapperTest {
                 originalText.getBytes());
         Context context = mock(Context.class);
 
-        NoOpMapper cat = new NoOpMapper();
+        NoOpMapper<BytesWritable> cat = new NoOpMapper<BytesWritable>();
         cat.map(key, compressedText, context);
         verify(context, only()).write(key, originalText);
     }
