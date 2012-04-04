@@ -14,7 +14,7 @@ public class BananaMatchers {
         return equalTo(someClass);
     }
 
-    public static Matcher<Text> sameAs(final Text some) {
+    public static Matcher<Text> sameAs(final Text expected) {
         return new TypeSafeMatcher<Text>() {
 
             private Text other;
@@ -22,14 +22,14 @@ public class BananaMatchers {
             @Override
             public void describeTo(Description description) {
                 description.appendText("Expected (1) but found (2):\n(1)"
-                        + other + "\n(2)" + some);
+                        + expected + "\n(2)" + other);
 
             }
 
             @Override
             public boolean matchesSafely(Text other) {
                 this.other = other;
-                return this.other.toString().equals(other.toString());
+                return this.other.toString().equals(expected.toString());
             }
         };
     }
