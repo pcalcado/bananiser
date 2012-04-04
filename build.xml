@@ -77,7 +77,15 @@
 	</target>
 
 	<target name="functional-test"
-	        depends="pack, functional-test-sedish, functional-test-cat" />
+	        depends="pack, functional-test-sedish, functional-test-cat, functional-multiple-reducers" />
+
+	<target name="functional-multiple-reducers">
+		<run-bananised-tool utility="Cat"
+		                    description="Multiple reducers"
+		                    input-file="${test.src.dir}/testdata.log"
+		                    output-file="${test.bin.dir}/test-cat-reducers-output/"
+		                    other="-D mapred.reduce.tasks=666" />
+	</target>
 
 	<target name="functional-test-cat">
 		<run-bananised-tool utility="Cat"

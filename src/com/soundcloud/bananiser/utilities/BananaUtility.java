@@ -24,12 +24,15 @@ import com.soundcloud.bananiser.NoOpReducer;
 
 public abstract class BananaUtility {
 
-    @Parameter(required = true)
-    private List<String> utility = null;
-
     @Parameter(names = "-fs", required = false)
     @SuppressWarnings("unused")
-    private String ignore = null;
+    private String ignoreFs = null;
+    @Parameter(names = "-D", required = false)
+    @SuppressWarnings("unused")
+    private String ignoredMinusD = null;
+
+    @Parameter(required = true)
+    private List<String> utility = null;
 
     @Parameter(names = "--input", description = "input path patterns", required = true)
     private List<String> inputs = new ArrayList<String>();
