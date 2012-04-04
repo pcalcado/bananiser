@@ -8,8 +8,7 @@ import org.apache.hadoop.io.Text;
 
 import com.soundcloud.bananiser.SeqFileCompatibleMapper;
 
-@SuppressWarnings("rawtypes")
-public class SedishMapper extends SeqFileCompatibleMapper {
+public class SedishMapper extends SeqFileCompatibleMapper<Text> {
 
     public static final String REPLACE_WITH_PARAMETER = SedishMapper.class
             .getName() + ".replaceWith";
@@ -18,7 +17,6 @@ public class SedishMapper extends SeqFileCompatibleMapper {
     private String pattern;
     private String replaceWith;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void setup(Context context) throws IOException,
             InterruptedException {
@@ -28,7 +26,6 @@ public class SedishMapper extends SeqFileCompatibleMapper {
         this.replaceWith = configuration.get(REPLACE_WITH_PARAMETER);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void map(LongWritable key, Text value, Context context)
             throws IOException, InterruptedException {
@@ -36,7 +33,7 @@ public class SedishMapper extends SeqFileCompatibleMapper {
         String original = value.toString();
         String replaced = original.replaceAll(pattern, replaceWith);
         Text modified = new Text(replaced);
-        context.write(key, new Text("modified"));
+        context.write(key, modified);
     }
 
     private void checkIfConfiguredCorrectly() {

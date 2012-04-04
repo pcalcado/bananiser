@@ -7688,7 +7688,7 @@ UNR lizard.cpe.uml.edu: Tue Aug 22 09:09:39 1995 (/EnablingTech/Visualization/vr
 815+1: Tue Aug 22 09:11:57 1995 (/SDSC/Geninfo/Internet/books): Sent cache: GET /1/SDSC/Geninfo/Internet/books HTTP/1.0
 805+1: Tue Aug 22 09:11:59 1995 (): HTTP error: HTTP/1.0 403 Sorry, access denied or file does not exist.
 805+1: Tue Aug 22 09:11:59 1995 (): Sorry, access denied or file does not exist.: /var/spool/gn/fun/movies
-81+17: Tue Aug 22 09:12:07 1995 (): Syntax error [no '/'] in selector [pselect]: ÿôÿý
+81+17: Tue Aug 22 09:12:07 1995 (): Syntax error [no '/'] in selector [pselect]:
 95+3: Tue Aug 22 09:12:09 1995 (/vrml): Sent cache: GET /vrml/ HTTP/1.0
 95+3: Tue Aug 22 09:12:10 1995 (/SDSC/Partners/vrml/Images/cone.gif): Sent binary: GET /SDSC/Partners/vrml/Images/cone.gif HTTP/1.0
 95+3: Tue Aug 22 09:12:11 1995 (/SDSC/Partners/vrml/Images/vrml.banner.gif): Sent binary: GET /SDSC/Partners/vrml/Images/vrml.banner.gif HTTP/1.0
@@ -15628,9 +15628,6 @@ UNR net3.scri.fsu.edu: Tue Aug 22 12:52:38 1995 (/SDSC/Partners/vrml/software/mo
 614+1: Tue Aug 22 13:09:34 1995 (): Sorry, access denied or file does not exist.: /var/spool/gn/Fun/fun.html
 1344+1: Tue Aug 22 13:09:36 1995 (/SDSC/Partners/vrml/Images/cube.gif): Sent binary: GET /SDSC/Partners/vrml/Images/cube.gif HTTP/1.0
 1344+1: Tue Aug 22 13:09:37 1995 (/SDSC/Partners/vrml/Images/SDSClogo.gif): Sent binary: GET /SDSC/Partners/vrml/Images/SDSClogo.gif HTTP/1.0
-1343+1: Tue Aug 22 13:09:38 1995 (/SDSC/Partners/vrml/examples.html): Sent text: GET /SDSC/Partners/vrml/examples.html HTTP/1.0
-UNR ad.berkeley.edu: Tue Aug 22 13:09:42 1995 (/): Sent cache: 
-1345+1: Tue Aug 22 13:09:42 1995 (): HTTP error: HTTP/1.0 403 Sorry, access denied or file does not exist.
 1345+1: Tue Aug 22 13:09:42 1995 (): Sorry, access denied or file does not exist.: /var/spool/gn/Fun/movie.html
 1087+1: Tue Aug 22 13:09:43 1995 (/Events/GIW/GIW.html): Sent text: GET /Events/GIW/GIW.html HTTP/1.0
 81+23: Tue Aug 22 13:09:43 1995 (/Home.html): Sent text: GET /Home.html HTTP/1.0
@@ -26156,9 +26153,6 @@ UNR arks.nv.us: Tue Aug 22 20:44:33 1995 (/images/search.gif): Sent binary: GET 
 1947+1: Tue Aug 22 20:45:13 1995 (/SDSC/Research/Visualization/Tecate/related.html): Sent text: GET /0/SDSC/Research/Visualization/Tecate/related.html HTTP/1.0
 1806+2: Tue Aug 22 20:45:18 1995 (/wow/mexico/city/taesa.html): Sent text: GET /wow/mexico/city/taesa.html HTTP/1.0
 1947+1: Tue Aug 22 20:45:20 1995 (/SDSC/Research/Visualization/Tecate/images/logo_small.gif): Sent binary: GET /0/SDSC/Research/Visualization/Tecate/images/logo_small.gif HTTP/1.0
-1935+1: Tue Aug 22 20:45:21 1995 (/wow/mexico/city/taesa2d.gif): Sent binary: GET /wow/mexico/city/taesa2d.gif HTTP/1.0
-UNR -2.shore.net: Tue Aug 22 20:45:24 1995 (/): Sent cache: 
-1956+1: Tue Aug 22 20:45:31 1995 (/SDSC/Geninfo/copyright.txt): Sent text: 0/SDSC/Geninfo/copyright.txt
 1957+1: Tue Aug 22 20:45:57 1995 (/SDSC/Partners/vrml/examples.html): Sent text: GET /SDSC/Partners/vrml/examples.html HTTP/1.0
 1956+1: Tue Aug 22 20:46:02 1995 (/SDSC/Geninfo/Internet): Sent cache: 1/SDSC/Geninfo/Internet
 1957+1: Tue Aug 22 20:46:04 1995 (/SDSC/Partners/vrml/Images/cone.gif): Sent binary: GET /SDSC/Partners/vrml/Images/cone.gif HTTP/1.0

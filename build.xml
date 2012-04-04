@@ -84,7 +84,7 @@
 	</target>
 
 	<target name="functional-test-sedish">
-		<run-bananised-tool utility="Sedish" description="Sedish Text->Text" input-file="${test.src.dir}/testdata.log" output-file="${test.bin.dir}/test-sedish-output1" other="--replace .* --with notsoBIGlogo" />
+		<run-bananised-tool utility="Sedish" description="Sedish Text->Text" input-file="${test.src.dir}/testdata.log" output-file="${test.bin.dir}/test-sedish-output1" other="--replace biglogo --with notsoBIGlogo" />
 		<diff description="Text==Text" one="${test.src.dir}/testdata.sedish.log" another="${test.bin.dir}/test-sedish-output1/part-r-00000" />
 
 		<run-bananised-tool utility="Cat" description="Text->Seq" input-file="${test.src.dir}/testdata.log" output-file="${test.bin.dir}/test-sedish-output2" compressed="--compressedOutput" />
