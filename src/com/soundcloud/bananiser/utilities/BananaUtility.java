@@ -26,10 +26,10 @@ public abstract class BananaUtility {
 
     @Parameter(names = "-fs", required = false)
     @SuppressWarnings("unused")
-    private String ignoreFs = null;
+    private List<String> ignoreFs = null;
     @Parameter(names = "-D", required = false)
     @SuppressWarnings("unused")
-    private String ignoredMinusD = null;
+    private List<String> ignoredMinusD = null;
 
     @Parameter(required = true)
     private List<String> utility = null;
@@ -62,17 +62,25 @@ public abstract class BananaUtility {
     }
 
     private void addJobName(Job job) {
-        String name = "Bananiser: Running [" + utility.get(0) + "] for ["
-                + System.getenv().get("USER") + "]";
+        String name = "Bananiser: Running [" + getUtilityName() + "] for ["
+                + getUsername() + "]";
         job.setJobName(name);
     }
 
+    private String getUtilityName() {
+        return utility.get(0);
+    }
+
+    private String getUsername() {
+        return System.getenv().get("USER");
+    }
+
     private void addInputAndOutputFormats(Job job) {
-        if (compressedInput) {
+        if (isCompressedInput()) {
             job.setInputFormatClass(SequenceFileInputFormat.class);
         }
 
-        if (compressedOutput) {
+        if (isCompressedOutput()) {
             job.setOutputFormatClass(SequenceFileOutputFormat.class);
         }
     }
@@ -85,7 +93,7 @@ public abstract class BananaUtility {
             for (String arg : args) {
                 System.out.println("arg:" + arg);
             }
-            e.printStackTrace();
+            e.getMessage();
             cli.usage();
             ToolRunner.printGenericCommandUsage(System.out);
             throw e;
