@@ -21,12 +21,14 @@ public class BananaJobs {
     }
 
     private String utiilityClassFqn(String[] args) {
-        String utilityName = args[0];
-        String utilitiesPackageName = this.getClass().getPackage().getName()
-                + "." + "utilities" + "." + utilityName.toLowerCase();
+        String utilityName = args[0].toLowerCase();
+        String myPackage = this.getClass().getPackage().getName();
+        String utilitiesPackageName = String.format("%s.utilities.%s",
+                myPackage, utilityName);
         String className = utilityName.substring(0, 1).toUpperCase()
                 + utilityName.substring(1);
-        String utilityFqn = utilitiesPackageName + "." + className + "Utility";
+        String utilityFqn = String.format("%s.%sUtility", utilitiesPackageName,
+                className);
         return utilityFqn;
     }
 

@@ -154,6 +154,7 @@
 		<attribute name="output-file" />
 		<sequential>
 			<echo message="================================ Run: @{utility} @{description}" />
+			<echo message="================================ $ lib/hadoop/bin/hadoop jar ${jar.file} @{utility} @{compressed} --input @{input-file} --output @{output-file} @{other} -fs file://." />
 			<exec executable="lib/hadoop/bin/hadoop" failonerror="true">
 				<arg line="jar ${jar.file} @{utility} @{compressed} --input @{input-file} --output @{output-file} @{other} -fs file://." />
 			</exec>
