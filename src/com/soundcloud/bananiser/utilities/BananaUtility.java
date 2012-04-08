@@ -23,6 +23,7 @@ import com.soundcloud.bananiser.mr.NoKeyReducer;
 import com.soundcloud.bananiser.mr.NoOpMapper;
 
 public abstract class BananaUtility {
+    private static final String PARAM_SEPARATOR = "::,::";
 
     @Parameter(names = "-fs", required = false)
     @SuppressWarnings("unused")
@@ -153,6 +154,22 @@ public abstract class BananaUtility {
     }
 
     protected void configure(Job job) {
+    }
+
+    public static String[] asParameterList(String parameterListString) {
+        return parameterListString.split(PARAM_SEPARATOR);
+    }
+
+    public static String toParameterListString(String... paramList) {
+        StringBuilder replaces = new StringBuilder();
+        for (String r : paramList) {
+            replaces.append(r).append(PARAM_SEPARATOR);
+        }
+        return replaces.toString();
+    }
+
+    public static String toParameterListString(List<String> paramList) {
+        return toParameterListString(paramList.toArray(new String[] {}));
     }
 
 }

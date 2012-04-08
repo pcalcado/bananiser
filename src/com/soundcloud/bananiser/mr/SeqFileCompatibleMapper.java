@@ -12,6 +12,11 @@ public abstract class SeqFileCompatibleMapper<TInput> extends
         Mapper<LongWritable, TInput, LongWritable, Text> {
     private static final Charset UTF8 = Charset.forName("UTF-8");
 
+    protected void setup(Context context) throws IOException,
+            InterruptedException {
+        super.setup(context);
+    }
+
     public void map(LongWritable key, TInput value, Context context)
             throws IOException, InterruptedException {
 

@@ -13,8 +13,6 @@ import com.soundcloud.bananiser.utilities.BananaUtility;
 
 public class SedishUtility extends BananaUtility {
 
-    public static final int DEFAULT_LINES = 1000;
-
     @Parameter(names = "--replace", description = "regexp to replace", required = true)
     private List<String> replaceList;
 
@@ -28,11 +26,8 @@ public class SedishUtility extends BananaUtility {
     @Override
     protected void configure(Job job) {
         super.configure(job);
-        StringBuilder replaces = new StringBuilder();
-        for (String r : replaceList) {
-            replaces.append(r).append(SedishMapper.REGEXP_SEPARATOR);
-        }
-        job.getConfiguration().set(TO_REPLACE_PARAMETER, replaces.toString());
+        job.getConfiguration().set(TO_REPLACE_PARAMETER,
+                toParameterListString(replaceList));
         job.getConfiguration().set(REPLACE_WITH_PARAMETER, with);
     }
 

@@ -77,14 +77,32 @@
 	</target>
 
 	<target name="functional-test"
-	        depends="pack, functional-test-sedish, functional-test-cat, functional-multiple-reducers" />
+	        depends="pack, functional-test-sedish, functional-test-cat, functional-test-hash" />
 
-	<target name="functional-multiple-reducers">
-		<run-bananised-tool utility="Cat"
-		                    description="Multiple reducers"
+	<target name="functional-test-hash">
+		<run-bananised-tool utility="Hash"
+		                    description="Hash Text->Text"
 		                    input-file="${test.src.dir}/testdata.log"
-		                    output-file="${test.bin.dir}/test-cat-reducers-output/"
-		                    other="-D mapred.reduce.tasks=666" />
+		                    output-file="${test.bin.dir}/test-hash-output1"
+		                    other="--hash HTTP.1.0 --hash binary" />
+		<no-diff-between description="Text==Text"
+		      one="${test.src.dir}/testdata.hash.log"
+		      another="${test.bin.dir}/test-hash-output1/part-r-00000" />
+
+		<run-bananised-tool utility="Cat"
+		                    description="Text->Seq"
+		                    input-file="${test.src.dir}/testdata.log"
+		                    output-file="${test.bin.dir}/test-hash-output2"
+		                    compressed="--compressedOutput" />
+		<run-bananised-tool utility="Hash"
+		                    description="Hash>Text"
+		                    input-file="${test.bin.dir}/test-hash-output2/part-r-00000"
+		                    output-file="${test.bin.dir}/test-hash-output3"
+		                    compressed="--compressedInput"
+		                    other="--hash HTTP.1.0 --hash binary" />
+		<no-diff-between description="Text==Text"
+		                 one="${test.src.dir}/testdata.hash.log"
+		                 another="${test.bin.dir}/test-hash-output3/part-r-00000" />
 	</target>
 
 	<target name="functional-test-cat">
@@ -111,12 +129,12 @@
 		                    output-file="${test.bin.dir}/test-cat-output4"
 		                    compressed="--compressedInput" />
 
-		<diff description="Text==Text"
-		      one="${test.src.dir}/testdata.log"
-		      another="${test.bin.dir}/test-cat-output1/part-r-00000" />
-		<diff description="Text==Text"
-		      one="${test.src.dir}/testdata.log"
-		      another="${test.bin.dir}/test-cat-output4/part-r-00000" />
+		<no-diff-between description="Text==Text"
+		                 one="${test.src.dir}/testdata.log"
+		                 another="${test.bin.dir}/test-cat-output1/part-r-00000" />
+		<no-diff-between description="Text==Text"
+		                 one="${test.src.dir}/testdata.log"
+		                 another="${test.bin.dir}/test-cat-output4/part-r-00000" />
 	</target>
 
 	<target name="functional-test-sedish">
@@ -125,9 +143,9 @@
 		                    input-file="${test.src.dir}/testdata.log"
 		                    output-file="${test.bin.dir}/test-sedish-output1"
 		                    other="--replace biglogo --with notsoBIGlogo" />
-		<diff description="Text==Text"
-		      one="${test.src.dir}/testdata.sedish.log"
-		      another="${test.bin.dir}/test-sedish-output1/part-r-00000" />
+		<no-diff-between description="Text==Text"
+		                 one="${test.src.dir}/testdata.sedish.log"
+		                 another="${test.bin.dir}/test-sedish-output1/part-r-00000" />
 
 		<run-bananised-tool utility="Cat"
 		                    description="Text->Seq"
@@ -140,9 +158,12 @@
 		                    output-file="${test.bin.dir}/test-sedish-output3"
 		                    compressed="--compressedInput"
 		                    other="--replace biglogo --with notsoBIGlogo" />
-		<diff description="Text==Text"
-		      one="${test.src.dir}/testdata.sedish.log"
-		      another="${test.bin.dir}/test-sedish-output3/part-r-00000" />
+		<no-diff-between description="Text==Text"
+		                 one="${test.bin.dir}/test-sedish-output1/part-r-00000"
+		                 another="${test.bin.dir}/test-sedish-output3/part-r-00000" />
+		<no-diff-between description="Text==Text"
+		                 one="${test.src.dir}/testdata.sedish.log"
+		                 another="${test.bin.dir}/test-sedish-output3/part-r-00000" />
 	</target>
 
 	<macrodef name="run-bananised-tool">
@@ -161,7 +182,7 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="diff">
+	<macrodef name="no-diff-between">
 		<attribute name="description" />
 		<attribute name="one" />
 		<attribute name="another" />

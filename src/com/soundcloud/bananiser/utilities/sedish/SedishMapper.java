@@ -7,6 +7,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 
 import com.soundcloud.bananiser.mr.SeqFileCompatibleMapper;
+import com.soundcloud.bananiser.utilities.BananaUtility;
 
 public class SedishMapper extends SeqFileCompatibleMapper<Text> {
 
@@ -14,8 +15,6 @@ public class SedishMapper extends SeqFileCompatibleMapper<Text> {
             .getName() + ".replaceWith";
     public static final String TO_REPLACE_PARAMETER = SedishMapper.class
             .getName() + ".toReplace";
-    public static final String REGEXP_SEPARATOR = "::,::";
-
     private String replaceWith;
     private String[] patterns;
 
@@ -24,8 +23,8 @@ public class SedishMapper extends SeqFileCompatibleMapper<Text> {
             InterruptedException {
         super.setup(context);
         Configuration configuration = context.getConfiguration();
-        this.patterns = configuration.get(TO_REPLACE_PARAMETER).split(
-                REGEXP_SEPARATOR);
+        this.patterns = BananaUtility.asParameterList(configuration
+                .get(TO_REPLACE_PARAMETER));
         this.replaceWith = configuration.get(REPLACE_WITH_PARAMETER);
     }
 
