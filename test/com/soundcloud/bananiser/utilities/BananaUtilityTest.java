@@ -17,8 +17,8 @@ import org.junit.Test;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.soundcloud.bananiser.mr.NoKeyReducer;
 import com.soundcloud.bananiser.mr.NoOpMapper;
-import com.soundcloud.bananiser.mr.NoOpReducer;
 
 public class BananaUtilityTest {
 
@@ -50,10 +50,8 @@ public class BananaUtilityTest {
     public void shouldConfigureCommonJobAttricutesBasedOnArgs() {
         String[] args = new String[] { "Main", "--input", INPUT_PATH_1,
                 "--input", INPUT_PATH_2, "--output", SOME_OUTPUT_PATH };
-        Configuration config = new Configuration();
-
         StubBananaUtility stubBananaUtility = new StubBananaUtility(args);
-        Job job = stubBananaUtility.createJob(config);
+        Job job = stubBananaUtility.createJob(new Configuration());
 
         String expectedJobName = "Bananiser: Running [Main] for ["
                 + System.getenv().get("USER") + "]";
@@ -72,65 +70,57 @@ public class BananaUtilityTest {
         String utilitySpecificAttribute = "this is unique";
         String[] args = new String[] { "Main", "--e", utilitySpecificAttribute,
                 "--input", INPUT_PATH_1, "--output", SOME_OUTPUT_PATH };
-        Configuration config = new Configuration();
-
         StubBananaUtility stubBananaUtility = new StubBananaUtility(args);
-        stubBananaUtility.createJob(config);
+        stubBananaUtility.createJob(new Configuration());
         assertThat(stubBananaUtility.exclusive, is(utilitySpecificAttribute));
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void shouldMakeInputAndUncompressedByDefault()
             throws ClassNotFoundException {
         String[] args = new String[] { "Main", "--input", INPUT_PATH_1,
                 "--output", SOME_OUTPUT_PATH };
-        Configuration config = new Configuration();
-
         StubBananaUtility stubBananaUtility = new StubBananaUtility(args);
-        Job job = stubBananaUtility.createJob(config);
+        Job job = stubBananaUtility.createJob(new Configuration());
 
         assertThat(job.getInputFormatClass(),
                 sameClassAs(TextInputFormat.class));
         assertThat(job.getOutputFormatClass(),
                 sameClassAs(TextOutputFormat.class));
         assertThat(job.getMapperClass(), sameClassAs(NoOpMapper.class));
-        assertThat(job.getReducerClass(), sameClassAs(NoOpReducer.class));
+        assertThat(job.getReducerClass(), sameClassAs(NoKeyReducer.class));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void shouldMakeInputCompressedIfArgs() throws ClassNotFoundException {
         String[] args = new String[] { "Main", "--input", INPUT_PATH_1,
                 "--output", SOME_OUTPUT_PATH, "--compressedInput" };
-        Configuration config = new Configuration();
-
         StubBananaUtility stubBananaUtility = new StubBananaUtility(args);
-        Job job = stubBananaUtility.createJob(config);
+        Job job = stubBananaUtility.createJob(new Configuration());
 
         assertThat(job.getInputFormatClass(),
                 sameClassAs(SequenceFileInputFormat.class));
         assertThat(job.getOutputFormatClass(),
                 sameClassAs(TextOutputFormat.class));
         assertThat(job.getMapperClass(), sameClassAs(NoOpMapper.class));
-        assertThat(job.getReducerClass(), sameClassAs(NoOpReducer.class));
+        assertThat(job.getReducerClass(), sameClassAs(NoKeyReducer.class));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void shouldMakeOutputCompressedIfArgs()
             throws ClassNotFoundException {
         String[] args = new String[] { "Main", "--input", INPUT_PATH_1,
                 "--output", SOME_OUTPUT_PATH, "--compressedOutput" };
-        Configuration config = new Configuration();
-
         StubBananaUtility stubBananaUtility = new StubBananaUtility(args);
-        Job job = stubBananaUtility.createJob(config);
+        Job job = stubBananaUtility.createJob(new Configuration());
 
         assertThat(job.getInputFormatClass(),
                 sameClassAs(TextInputFormat.class));
         assertThat(job.getOutputFormatClass(),
                 sameClassAs(SequenceFileOutputFormat.class));
+        assertThat(
+                job.getConfiguration().getBoolean("mapred.output.compress",
+                        false), is(true));
         assertThat(job.getMapperClass(), sameClassAs(NoOpMapper.class));
         assertThat(job.getReducerClass(), sameClassAs(Reducer.class));
     }

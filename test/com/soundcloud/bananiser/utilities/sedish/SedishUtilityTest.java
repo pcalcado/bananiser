@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.beust.jcommander.ParameterException;
-import com.soundcloud.bananiser.mr.NoOpReducer;
+import com.soundcloud.bananiser.mr.NoKeyReducer;
 
 public class SedishUtilityTest {
     @Test
@@ -26,7 +26,7 @@ public class SedishUtilityTest {
         Job job = new SedishUtility(args).createJob(new Configuration());
 
         assertThat(job.getMapperClass(), sameClassAs(SedishMapper.class));
-        assertThat(job.getReducerClass(), sameClassAs(NoOpReducer.class));
+        assertThat(job.getReducerClass(), sameClassAs(NoKeyReducer.class));
         Configuration jobConfig = job.getConfiguration();
         assertThat(jobConfig.get(TO_REPLACE_PARAMETER), is("original1"
                 + REGEXP_SEPARATOR + "original2" + REGEXP_SEPARATOR));

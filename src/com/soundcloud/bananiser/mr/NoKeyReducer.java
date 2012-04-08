@@ -4,7 +4,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class NoOpReducer extends
+public class NoKeyReducer extends
         Reducer<LongWritable, Text, LongWritable, Text> {
 
     protected void reduce(LongWritable key, Iterable<Text> values,

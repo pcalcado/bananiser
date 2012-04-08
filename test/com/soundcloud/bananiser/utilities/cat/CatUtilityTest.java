@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.junit.Test;
 
 import com.soundcloud.bananiser.mr.NoOpMapper;
-import com.soundcloud.bananiser.mr.NoOpReducer;
+import com.soundcloud.bananiser.mr.NoKeyReducer;
 
 public class CatUtilityTest {
 
@@ -22,6 +22,6 @@ public class CatUtilityTest {
         CatUtility catUtility = new CatUtility(args);
         Job job = catUtility.createJob(config);
         assertThat(job.getMapperClass(), sameClassAs(NoOpMapper.class));
-        assertThat(job.getReducerClass(), sameClassAs(NoOpReducer.class));
+        assertThat(job.getReducerClass(), sameClassAs(NoKeyReducer.class));
     }
 }

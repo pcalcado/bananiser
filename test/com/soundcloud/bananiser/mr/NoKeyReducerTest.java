@@ -12,9 +12,9 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 import org.junit.Test;
 
-import com.soundcloud.bananiser.mr.NoOpReducer;
+import com.soundcloud.bananiser.mr.NoKeyReducer;
 
-public class NoOpReducerTest {
+public class NoKeyReducerTest {
     @Test
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void shouldNotChangeInput() throws IOException, InterruptedException {
@@ -25,7 +25,7 @@ public class NoOpReducerTest {
 
         Iterable<Text> values = Arrays.asList(text1, text2);
 
-        NoOpReducer reducer = new NoOpReducer();
+        NoKeyReducer reducer = new NoKeyReducer();
         reducer.reduce(key, values, context);
 
         verify(context).write(null, text1);

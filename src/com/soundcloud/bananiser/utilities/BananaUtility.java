@@ -19,8 +19,8 @@ import org.apache.hadoop.util.ToolRunner;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.soundcloud.bananiser.mr.NoKeyReducer;
 import com.soundcloud.bananiser.mr.NoOpMapper;
-import com.soundcloud.bananiser.mr.NoOpReducer;
 
 public abstract class BananaUtility {
 
@@ -82,6 +82,7 @@ public abstract class BananaUtility {
 
         if (isCompressedOutput()) {
             job.setOutputFormatClass(SequenceFileOutputFormat.class);
+            SequenceFileOutputFormat.setCompressOutput(job, true);
         }
     }
 
@@ -143,7 +144,7 @@ public abstract class BananaUtility {
 
     @SuppressWarnings("rawtypes")
     protected Class<? extends Reducer> getReducerToUse() {
-        return isCompressedOutput() ? Reducer.class : NoOpReducer.class;
+        return isCompressedOutput() ? Reducer.class : NoKeyReducer.class;
     }
 
     @SuppressWarnings("rawtypes")
