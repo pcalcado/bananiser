@@ -6,7 +6,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 
-import com.soundcloud.bananiser.SeqFileCompatibleMapper;
+import com.soundcloud.bananiser.mr.SeqFileCompatibleMapper;
 
 public class SedishMapper extends SeqFileCompatibleMapper<Text> {
 

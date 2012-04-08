@@ -17,8 +17,8 @@ import org.junit.Test;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
-import com.soundcloud.bananiser.NoOpMapper;
-import com.soundcloud.bananiser.NoOpReducer;
+import com.soundcloud.bananiser.mr.NoOpMapper;
+import com.soundcloud.bananiser.mr.NoOpReducer;
 
 public class BananaUtilityTest {
 

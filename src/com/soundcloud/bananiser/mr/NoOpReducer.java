@@ -1,4 +1,4 @@
-package com.soundcloud.bananiser;
+package com.soundcloud.bananiser.mr;
 
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;

@@ -19,8 +19,8 @@ import org.apache.hadoop.util.ToolRunner;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
-import com.soundcloud.bananiser.NoOpMapper;
-import com.soundcloud.bananiser.NoOpReducer;
+import com.soundcloud.bananiser.mr.NoOpMapper;
+import com.soundcloud.bananiser.mr.NoOpReducer;
 
 public abstract class BananaUtility {
 

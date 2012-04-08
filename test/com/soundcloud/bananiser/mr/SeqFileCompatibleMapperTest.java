@@ -1,4 +1,4 @@
-package com.soundcloud.bananiser;
+package com.soundcloud.bananiser.mr;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -12,6 +12,8 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.junit.Test;
+
+import com.soundcloud.bananiser.mr.SeqFileCompatibleMapper;
 
 public class SeqFileCompatibleMapperTest {
 

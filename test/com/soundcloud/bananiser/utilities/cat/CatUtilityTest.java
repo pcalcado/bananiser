@@ -7,8 +7,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.Job;
 import org.junit.Test;
 
-import com.soundcloud.bananiser.NoOpMapper;
-import com.soundcloud.bananiser.NoOpReducer;
+import com.soundcloud.bananiser.mr.NoOpMapper;
+import com.soundcloud.bananiser.mr.NoOpReducer;
 
 public class CatUtilityTest {
 

@@ -1,4 +1,4 @@
-package com.soundcloud.bananiser;
+package com.soundcloud.bananiser.mr;
 
 import java.io.IOException;
 

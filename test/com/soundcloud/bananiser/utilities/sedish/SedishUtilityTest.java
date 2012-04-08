@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.beust.jcommander.ParameterException;
-import com.soundcloud.bananiser.NoOpReducer;
+import com.soundcloud.bananiser.mr.NoOpReducer;
 
 public class SedishUtilityTest {
     @Test

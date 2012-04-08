@@ -1,4 +1,4 @@
-package com.soundcloud.bananiser;
+package com.soundcloud.bananiser.mr;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
@@ -11,6 +11,8 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.junit.Test;
+
+import com.soundcloud.bananiser.mr.NoOpMapper;
 
 public class NoOpMapperTest {
     @Test
