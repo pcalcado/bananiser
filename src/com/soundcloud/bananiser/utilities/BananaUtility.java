@@ -79,15 +79,23 @@ public abstract class BananaUtility {
 
     private void addInputAndOutputFormats(Job job) {
         if (isCompressedInput()) {
-            job.setInputFormatClass(SequenceFileInputFormat.class);
+            makeInputCompressed(job);
         }
 
         if (isCompressedOutput()) {
-            job.setOutputFormatClass(SequenceFileOutputFormat.class);
-            SequenceFileOutputFormat.setCompressOutput(job, true);
-            SequenceFileOutputFormat.setOutputCompressionType(job,
-                    CompressionType.BLOCK);
+            makeOutputCompressed(job);
         }
+    }
+
+    private void makeInputCompressed(Job job) {
+        job.setInputFormatClass(SequenceFileInputFormat.class);
+    }
+
+    private void makeOutputCompressed(Job job) {
+        job.setOutputFormatClass(SequenceFileOutputFormat.class);
+        SequenceFileOutputFormat.setCompressOutput(job, true);
+        SequenceFileOutputFormat.setOutputCompressionType(job,
+                CompressionType.BLOCK);
     }
 
     private void loadArgs(String[] args) {

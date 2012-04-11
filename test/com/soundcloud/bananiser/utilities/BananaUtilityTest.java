@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.StringContains.containsString;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.io.SequenceFile.CompressionType;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
@@ -107,7 +108,7 @@ public class BananaUtilityTest {
     }
 
     @Test
-    public void shouldMakeOutputCompressedIfArgs()
+    public void shouldMakeOutputBlockCompressedIfArgs()
             throws ClassNotFoundException {
         String[] args = new String[] { "Main", "--input", INPUT_PATH_1,
                 "--output", SOME_OUTPUT_PATH, "--compressedOutput" };
@@ -121,6 +122,9 @@ public class BananaUtilityTest {
         assertThat(
                 job.getConfiguration().getBoolean("mapred.output.compress",
                         false), is(true));
+        assertThat(
+                job.getConfiguration().get("mapred.output.compression.type"),
+                is(CompressionType.BLOCK.toString()));
         assertThat(job.getMapperClass(), sameClassAs(NoOpMapper.class));
         assertThat(job.getReducerClass(), sameClassAs(Reducer.class));
     }
