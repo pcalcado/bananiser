@@ -8,6 +8,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.SequenceFile.CompressionType;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -84,6 +85,8 @@ public abstract class BananaUtility {
         if (isCompressedOutput()) {
             job.setOutputFormatClass(SequenceFileOutputFormat.class);
             SequenceFileOutputFormat.setCompressOutput(job, true);
+            SequenceFileOutputFormat.setOutputCompressionType(job,
+                    CompressionType.BLOCK);
         }
     }
 
