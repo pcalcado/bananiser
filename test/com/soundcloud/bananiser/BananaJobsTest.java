@@ -7,8 +7,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.Job;
 import org.junit.Test;
 
-import com.soundcloud.bananiser.utilities.test.TestMapper;
-import com.soundcloud.bananiser.utilities.test.TestReducer;
+import com.soundcloud.bananiser.mr.utilities.test.TestMapper;
+import com.soundcloud.bananiser.mr.utilities.test.TestReducer;
 
 public class BananaJobsTest {
     @Test

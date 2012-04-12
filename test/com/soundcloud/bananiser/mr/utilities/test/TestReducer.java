@@ -1,4 +1,4 @@
-package com.soundcloud.bananiser.utilities.test;
+package com.soundcloud.bananiser.mr.utilities.test;
 
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.LongWritable;

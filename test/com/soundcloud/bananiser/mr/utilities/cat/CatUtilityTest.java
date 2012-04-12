@@ -1,6 +1,6 @@
-package com.soundcloud.bananiser.utilities.cat;
+package com.soundcloud.bananiser.mr.utilities.cat;
 
-import static com.soundcloud.bananiser.test.BananaMatchers.sameClassAs;
+import static com.soundcloud.bananiser.mr.test.BananaMatchers.sameClassAs;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.apache.hadoop.conf.Configuration;
@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.soundcloud.bananiser.mr.NoOpMapper;
 import com.soundcloud.bananiser.mr.NoKeyReducer;
+import com.soundcloud.bananiser.mr.utilities.cat.CatUtility;
 
 public class CatUtilityTest {
 

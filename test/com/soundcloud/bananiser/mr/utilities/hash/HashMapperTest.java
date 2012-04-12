@@ -1,13 +1,14 @@
-package com.soundcloud.bananiser.utilities.hash;
+package com.soundcloud.bananiser.mr.utilities.hash;
 
-import static com.soundcloud.bananiser.utilities.BananaUtility.toParameterListString;
-import static com.soundcloud.bananiser.utilities.hash.HashMapper.TO_REPLACE_PARAMETER;
+import static com.soundcloud.bananiser.mr.utilities.BananaUtility.toParameterListString;
+import static com.soundcloud.bananiser.mr.utilities.hash.HashMapper.TO_REPLACE_PARAMETER;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.junit.Test;
 
 import com.soundcloud.bananiser.mr.MapperTestCase;
+import com.soundcloud.bananiser.mr.utilities.hash.HashMapper;
 
 public class HashMapperTest extends MapperTestCase {
 

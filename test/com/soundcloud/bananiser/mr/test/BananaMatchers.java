@@ -1,4 +1,4 @@
-package com.soundcloud.bananiser.test;
+package com.soundcloud.bananiser.mr.test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
@@ -12,7 +12,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import com.beust.jcommander.ParameterException;
-import com.soundcloud.bananiser.utilities.BananaUtility;
+import com.soundcloud.bananiser.mr.utilities.BananaUtility;
 
 public class BananaMatchers {
 

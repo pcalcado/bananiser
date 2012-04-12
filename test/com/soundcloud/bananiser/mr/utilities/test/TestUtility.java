@@ -1,9 +1,9 @@
-package com.soundcloud.bananiser.utilities.test;
+package com.soundcloud.bananiser.mr.utilities.test;
 
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 
-import com.soundcloud.bananiser.utilities.BananaUtility;
+import com.soundcloud.bananiser.mr.utilities.BananaUtility;
 
 public class TestUtility extends BananaUtility {
 

@@ -1,4 +1,4 @@
-package com.soundcloud.bananiser.utilities.sedish;
+package com.soundcloud.bananiser.mr.utilities.sedish;
 
 import java.io.IOException;
 
@@ -7,7 +7,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 
 import com.soundcloud.bananiser.mr.SeqFileCompatibleMapper;
-import com.soundcloud.bananiser.utilities.BananaUtility;
+import com.soundcloud.bananiser.mr.utilities.BananaUtility;
 
 public class SedishMapper extends SeqFileCompatibleMapper<Text> {
 

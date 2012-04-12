@@ -1,6 +1,6 @@
-package com.soundcloud.bananiser.utilities.hash;
+package com.soundcloud.bananiser.mr.utilities.hash;
 
-import static com.soundcloud.bananiser.utilities.hash.HashMapper.TO_REPLACE_PARAMETER;
+import static com.soundcloud.bananiser.mr.utilities.hash.HashMapper.TO_REPLACE_PARAMETER;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import com.beust.jcommander.Parameter;
-import com.soundcloud.bananiser.utilities.BananaUtility;
+import com.soundcloud.bananiser.mr.utilities.BananaUtility;
 
 public class HashUtility extends BananaUtility {
 

@@ -1,6 +1,6 @@
 package com.soundcloud.bananiser.mr;
 
-import static com.soundcloud.bananiser.test.BananaMatchers.sameAs;
+import static com.soundcloud.bananiser.mr.test.BananaMatchers.sameAs;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;

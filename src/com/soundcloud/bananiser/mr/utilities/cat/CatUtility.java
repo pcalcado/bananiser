@@ -1,6 +1,6 @@
-package com.soundcloud.bananiser.utilities.cat;
+package com.soundcloud.bananiser.mr.utilities.cat;
 
-import com.soundcloud.bananiser.utilities.BananaUtility;
+import com.soundcloud.bananiser.mr.utilities.BananaUtility;
 
 public class CatUtility extends BananaUtility {
     public CatUtility(String[] args) {

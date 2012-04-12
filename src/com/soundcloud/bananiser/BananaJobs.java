@@ -5,7 +5,7 @@ import java.lang.reflect.Constructor;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.Job;
 
-import com.soundcloud.bananiser.utilities.BananaUtility;
+import com.soundcloud.bananiser.mr.utilities.BananaUtility;
 
 public class BananaJobs {
     private static final Class<?>[] TOOL_CONSTRUCTOR_SIGNATURE = new Class<?>[] { String[].class };
@@ -23,7 +23,7 @@ public class BananaJobs {
     private String utiilityClassFqn(String[] args) {
         String utilityName = args[0].toLowerCase();
         String myPackage = this.getClass().getPackage().getName();
-        String utilitiesPackageName = String.format("%s.utilities.%s",
+        String utilitiesPackageName = String.format("%s.mr.utilities.%s",
                 myPackage, utilityName);
         String className = utilityName.substring(0, 1).toUpperCase()
                 + utilityName.substring(1);

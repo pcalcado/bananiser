@@ -1,6 +1,6 @@
-package com.soundcloud.bananiser.utilities.hash;
+package com.soundcloud.bananiser.mr.utilities.hash;
 
-import static com.soundcloud.bananiser.utilities.BananaUtility.asParameterList;
+import static com.soundcloud.bananiser.mr.utilities.BananaUtility.asParameterList;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

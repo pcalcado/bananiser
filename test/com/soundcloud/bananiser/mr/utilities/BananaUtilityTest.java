@@ -1,6 +1,6 @@
-package com.soundcloud.bananiser.utilities;
+package com.soundcloud.bananiser.mr.utilities;
 
-import static com.soundcloud.bananiser.test.BananaMatchers.sameClassAs;
+import static com.soundcloud.bananiser.mr.test.BananaMatchers.sameClassAs;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,6 +20,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import com.soundcloud.bananiser.mr.NoKeyReducer;
 import com.soundcloud.bananiser.mr.NoOpMapper;
+import com.soundcloud.bananiser.mr.utilities.BananaUtility;
 
 public class BananaUtilityTest {
 

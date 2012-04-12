@@ -1,9 +1,9 @@
-package com.soundcloud.bananiser.utilities.hash;
+package com.soundcloud.bananiser.mr.utilities.hash;
 
-import static com.soundcloud.bananiser.test.BananaMatchers.sameClassAs;
-import static com.soundcloud.bananiser.test.BananaMatchers.throwsParameterExceptionFor;
-import static com.soundcloud.bananiser.utilities.BananaUtility.toParameterListString;
-import static com.soundcloud.bananiser.utilities.hash.HashMapper.TO_REPLACE_PARAMETER;
+import static com.soundcloud.bananiser.mr.test.BananaMatchers.sameClassAs;
+import static com.soundcloud.bananiser.mr.test.BananaMatchers.throwsParameterExceptionFor;
+import static com.soundcloud.bananiser.mr.utilities.BananaUtility.toParameterListString;
+import static com.soundcloud.bananiser.mr.utilities.hash.HashMapper.TO_REPLACE_PARAMETER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -12,6 +12,8 @@ import org.apache.hadoop.mapreduce.Job;
 import org.junit.Test;
 
 import com.soundcloud.bananiser.mr.NoKeyReducer;
+import com.soundcloud.bananiser.mr.utilities.hash.HashMapper;
+import com.soundcloud.bananiser.mr.utilities.hash.HashUtility;
 
 public class HashUtilityTest {
 

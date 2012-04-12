@@ -1,14 +1,15 @@
-package com.soundcloud.bananiser.utilities.sedish;
+package com.soundcloud.bananiser.mr.utilities.sedish;
 
-import static com.soundcloud.bananiser.utilities.BananaUtility.toParameterListString;
-import static com.soundcloud.bananiser.utilities.sedish.SedishMapper.REPLACE_WITH_PARAMETER;
-import static com.soundcloud.bananiser.utilities.sedish.SedishMapper.TO_REPLACE_PARAMETER;
+import static com.soundcloud.bananiser.mr.utilities.BananaUtility.toParameterListString;
+import static com.soundcloud.bananiser.mr.utilities.sedish.SedishMapper.REPLACE_WITH_PARAMETER;
+import static com.soundcloud.bananiser.mr.utilities.sedish.SedishMapper.TO_REPLACE_PARAMETER;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.junit.Test;
 
 import com.soundcloud.bananiser.mr.MapperTestCase;
+import com.soundcloud.bananiser.mr.utilities.sedish.SedishMapper;
 
 public class SedishMapperTest extends MapperTestCase {
 
